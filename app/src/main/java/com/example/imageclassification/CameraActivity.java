@@ -79,7 +79,7 @@ public abstract class CameraActivity extends AppCompatActivity implements ImageR
             inferenceTimeTextView;
     protected ImageView bottomSheetArrowImageView;
     private ImageView plusImageView, minusImageView;
-    private Spinner modelSpinner;
+    //   private Spinner modelSpinner;
     private Spinner deviceSpinner;
     private TextView threadsTextView;
 
@@ -171,7 +171,7 @@ public abstract class CameraActivity extends AppCompatActivity implements ImageR
         rotationTextView = findViewById(R.id.rotation_info);
         inferenceTimeTextView = findViewById(R.id.inference_info);
 
-        modelSpinner.setOnItemSelectedListener(this);
+        //  modelSpinner.setOnItemSelectedListener(this);
         deviceSpinner.setOnItemSelectedListener(this);
 
         plusImageView.setOnClickListener(this);
@@ -380,9 +380,12 @@ public abstract class CameraActivity extends AppCompatActivity implements ImageR
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        if (parent == modelSpinner) {
-            // setModel(Model.valueOf(parent.getItemAtPosition(pos).toString().toUpperCase()));
-        } else if (parent == deviceSpinner) {
+//        if (parent == modelSpinner) {
+//            // setModel(Model.valueOf(parent.getItemAtPosition(pos).toString().toUpperCase()));
+//        }
+
+
+        if (parent == deviceSpinner) {
             setDevice(Device.valueOf(parent.getItemAtPosition(pos).toString()));
         }
     }
