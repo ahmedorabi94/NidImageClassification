@@ -30,6 +30,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.imageclassification.env.ImageUtils;
 import com.example.imageclassification.env.Logger;
@@ -397,7 +398,7 @@ public abstract class CameraActivity extends AppCompatActivity implements ImageR
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSIONS_REQUEST) {
             if (allPermissionsGranted(grantResults)) {
-                //  setFragment();
+                setFragment();
             } else {
                 requestPermission();
             }
@@ -484,30 +485,30 @@ public abstract class CameraActivity extends AppCompatActivity implements ImageR
     protected void setFragment() {
         String cameraId = chooseCamera();
 
-//        Fragment fragment;
-//        if (useCamera2API) {
-//            CameraConnectionFragment camera2Fragment =
-//                    CameraConnectionFragment.newInstance(
-//                            new CameraConnectionFragment.ConnectionCallback() {
-//                                @Override
-//                                public void onPreviewSizeChosen(final Size size, final int rotation) {
-//                                    previewHeight = size.getHeight();
-//                                    previewWidth = size.getWidth();
-//                                    CameraActivity.this.onPreviewSizeChosen(size, rotation);
-//                                }
-//                            },
-//                            this,
-//                            getLayoutId(),
-//                            getDesiredPreviewFrameSize());
-//
-//            camera2Fragment.setCamera(cameraId);
-//            fragment = camera2Fragment;
-//        } else {
-//            fragment =
-//                    new LegacyCameraConnectionFragment(this, getLayoutId(), getDesiredPreviewFrameSize());
-//        }
-//
-//        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        Fragment fragment;
+        if (useCamera2API) {
+            CameraConnectionFragment camera2Fragment =
+                    CameraConnectionFragment.newInstance(
+                            new CameraConnectionFragment.ConnectionCallback() {
+                                @Override
+                                public void onPreviewSizeChosen(final Size size, final int rotation) {
+                                    previewHeight = size.getHeight();
+                                    previewWidth = size.getWidth();
+                                    CameraActivity.this.onPreviewSizeChosen(size, rotation);
+                                }
+                            },
+                            this,
+                            getLayoutId(),
+                            getDesiredPreviewFrameSize());
+
+            camera2Fragment.setCamera(cameraId);
+            fragment = camera2Fragment;
+        } else {
+            fragment =
+                    new LegacyCameraConnectionFragment(this, getLayoutId(), getDesiredPreviewFrameSize());
+        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     protected void fillBytes(final Image.Plane[] planes, final byte[][] yuvBytes) {
